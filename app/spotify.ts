@@ -34,7 +34,6 @@ async function getAuthorizationToken() {
 
 export async function getNowPlayingData() {
   try {
-    console.log(refresh_token);
     const accessToken = await getAuthorizationToken();
     const response = await axios.get(nowPlayingURL, {
       headers: {
