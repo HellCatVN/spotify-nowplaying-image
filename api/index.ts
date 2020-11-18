@@ -26,7 +26,7 @@ export default async function (req: NowRequest, res: NowResponse) {
     }
     const cover = images[0]?.url || null;
     let file = fs.readFileSync(
-      __dirname + '/../app/components/Player/index.ejs',
+      __dirname + '/../app/components/AudioVirtualize/index.ejs',
       'utf-8'
     );
     text = ejs.render(file, { title: track, artist: artist, cover: cover });
