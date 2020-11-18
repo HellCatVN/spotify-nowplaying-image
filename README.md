@@ -1,6 +1,11 @@
 <h1 align="center">Spotify Now Playing</h1>
 <p align="center">Show what you listen at spotify for github README</p>
 
+<p align="center">
+   <h3>Demo</h3>
+   <h4>Theme: 0</h4>
+   <img src="https://spotify-nowplaying-image.vercel.app"/>
+<p align="center">
 
 Spotify for Developers
 -----

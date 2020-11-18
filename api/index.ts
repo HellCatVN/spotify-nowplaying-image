@@ -2,7 +2,7 @@ import { NowRequest, NowResponse } from '@vercel/node';
 import { renderToString } from 'react-dom/server';
 import { Player } from '../app/components/Minimal/Player';
 import { getNowPlayingData } from '../app/spotify';
-import axios from 'axios';
+// import axios from 'axios';
 import ejs from 'ejs';
 import fs from 'fs';
 
@@ -37,5 +37,7 @@ export default async function (req: NowRequest, res: NowResponse) {
       Player({ cover, track, artist, progress, duration, isPlaying })
     );
   }
+  res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
   return res.status(200).send(text);
 }
