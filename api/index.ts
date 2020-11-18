@@ -25,8 +25,9 @@ export default async function (req: NowRequest, res: NowResponse) {
       track = 'No song is playing';
     }
     const coverURL = images[0]?.url || null;
-    const bufferImage = await axios.get(coverURL, { responseType: 'arraybuffer' });
-    const cover = `data:image/jpeg;base64,${Buffer.from(bufferImage.data).toString("base64")}`;
+    if (coverURL) {
+      var cover = await getBase64Image(coverURL);
+    }
     let file = fs.readFileSync(
       __dirname + '/../app/components/AudioVirtualize/index.ejs',
       'utf-8'
@@ -35,13 +36,23 @@ export default async function (req: NowRequest, res: NowResponse) {
   } else if (theme == '1') {
     // Get Smallest Thumbnail
     const coverURL = images[images.length - 1]?.url || null;
-    const bufferImage = await axios.get(coverURL, { responseType: 'arraybuffer' });
-    const cover = `data:image/jpeg;base64,${Buffer.from(bufferImage.data).toString("base64")}`;
+    if (coverURL) {
+      var cover = await getBase64Image(coverURL);
+    }
     text = renderToString(
       Player({ cover, track, artist, progress, duration, isPlaying })
     );
   }
-  res.setHeader("Content-Type", "image/svg+xml");
-  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
+  res.setHeader('Content-Type', 'image/svg+xml');
+  res.setHeader('Cache-Control', 's-maxage=1, stale-while-revalidate');
   return res.status(200).send(text);
+}
+
+async function getBase64Image(coverURL) {
+  const bufferImage = await axios.get(coverURL, {
+    responseType: 'arraybuffer',
+  });
+  return `data:image/jpeg;base64,${Buffer.from(bufferImage.data).toString(
+    'base64'
+  )}`;
 }
