@@ -2,7 +2,7 @@ import { NowRequest, NowResponse } from '@vercel/node';
 import { renderToString } from 'react-dom/server';
 import { Player } from '../app/components/Minimal/Player';
 import { getNowPlayingData } from '../app/spotify';
-// import axios from 'axios';
+import axios from 'axios';
 import ejs from 'ejs';
 import fs from 'fs';
 
@@ -24,7 +24,9 @@ export default async function (req: NowRequest, res: NowResponse) {
     if (track == null) {
       track = 'No song is playing';
     }
-    const cover = images[0]?.url || null;
+    const coverURL = images[0]?.url || null;
+    const bufferImage = await axios.get(coverURL, { responseType: 'arraybuffer' });
+    const cover = `data:image/jpeg;base64,${Buffer.from(bufferImage.data).toString("base64")}`;
     let file = fs.readFileSync(
       __dirname + '/../app/components/AudioVirtualize/index.ejs',
       'utf-8'
@@ -32,7 +34,9 @@ export default async function (req: NowRequest, res: NowResponse) {
     text = ejs.render(file, { title: track, artist: artist, cover: cover });
   } else if (theme == '1') {
     // Get Smallest Thumbnail
-    const cover = images[images.length - 1]?.url || null;
+    const coverURL = images[images.length - 1]?.url || null;
+    const bufferImage = await axios.get(coverURL, { responseType: 'arraybuffer' });
+    const cover = `data:image/jpeg;base64,${Buffer.from(bufferImage.data).toString("base64")}`;
     text = renderToString(
       Player({ cover, track, artist, progress, duration, isPlaying })
     );
