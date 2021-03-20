@@ -7,6 +7,8 @@
     <img src="https://spotify-nowplaying-image.vercel.app"/>
     <h4>Theme: 1</h4>
     <img src="https://spotify-nowplaying-image.vercel.app?theme=1"/>
+    <h4>Theme: 2</h4>
+    <img src="https://spotify-nowplaying-image.vercel.app?theme=2"/>
 <p align="center">
 
 ## Spotify for Developers
