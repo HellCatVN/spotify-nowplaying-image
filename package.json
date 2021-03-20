@@ -1,9 +1,12 @@
 {
   "name": "spotify-nowplaying-image",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
-  "main": "index.js",
+  "main": "api/index.ts",
+  "scripts": {
+    "start": "nodemon api/index.ts"
+  },
   "author": "HellCatVN",
   "dependencies": {
     "axios": "^0.21.0",
